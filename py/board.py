@@ -9,3 +9,4 @@
     # clear -> clear the board
     # Calculate nearby mines (set status)
 # ** 
+
