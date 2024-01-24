@@ -15,6 +15,11 @@ class Value(Enum):
 
 class cell:
     def __init__(self, state, value):
-        self.state = Status.hidden
-        self.value = Value.mine
+        self.state = Status(state)
+        self.value = Value(value)
 
+    def setValue(self, value):
+        self.value = Value(value)
+        
+    def getValue(self):
+        return self.value.value
