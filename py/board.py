@@ -27,14 +27,43 @@ class board:
     def init_mine(self, idx):
         self.cells[idx] = -1
 
-        change = [self.width + 1, self.width, self.width - 1, +1, -1, -self.width + 1, -self.width, -self.width - 1]
+        change = [self.width+1, self.width, self.width-1, +1, -1, -self.width+1, -self.width, -self.width-1]
+        if idx < self.width:
+            change.remove(-self.width+1)
+            change.remove(-self.width)
+            change.remove( -self.width-1)
+        elif idx > self.width * (self.height - 1):
+            change.remove(self.width+1)
+            change.remove(self.width)
+            change.remove( self.width-1)
+        if idx % self.width == 0:
+            change.remove(-1)
+            try:
+                change.remove(-self.width-1)
+            except:
+                pass
+            try:
+                change.remove(self.width-1)
+            except:
+                pass
+        elif idx % self.width == self.width-1:
+            change.remove(+1)
+            try:
+                change.remove(-self.width+1)
+            except:
+                pass
+            try:
+                change.remove(self.width+1)
+            except:
+                pass
+        print(idx)
+        print(change)
         for adj in change:
             print(idx + adj)
-            self.inc_cell(idx + adj, idx)
+            self.inc_cell(idx + adj)
 
-    def inc_cell(self, idx, mine):
-        if ((idx > 0 and idx < self.width * self.height) or (idx % self.width <= 0 and idx % self.width < self.width)) and self.cells[idx] != -1:
-            self.cells[idx] += 1
+    def inc_cell(self, idx):
+        self.cells[idx] += 1
     
     def display(self, Type = "csv"):
         if(Type.lower() == "csv"):
