@@ -32,7 +32,7 @@ class board:
             change.remove(-self.width+1)
             change.remove(-self.width)
             change.remove( -self.width-1)
-        elif idx > self.width * (self.height - 1):
+        elif idx >= self.width * (self.height - 1):
             change.remove(self.width+1)
             change.remove(self.width)
             change.remove( self.width-1)
