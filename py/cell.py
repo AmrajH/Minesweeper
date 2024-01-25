@@ -1,4 +1,3 @@
-
 class cell:
     """
     Represents a cell object in a Minesweeper game.
@@ -29,6 +28,3 @@ class cell:
     def not_hidden(self): # to be used: if cell.not_hidden():
         """Returns whether cell is revealed, False if hidden."""
         return not self.is_hidden
-
-    
-
