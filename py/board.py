@@ -17,9 +17,9 @@ class board:
         self.cells = [0 for i in range(width*height)]
         indexes = random.sample([i for i in range(width*height)], mines) # initiate to all 0
         #TODO uncomment:
-        # for i in indexes:
-        #     self.init_mine(i)
-        self.init_mine(1)
+        for i in indexes:
+            self.init_mine(i)
+        # self.init_mine(6)
 
 
         print(self.cells) # TODO: delete me
@@ -34,11 +34,13 @@ class board:
             self.inc_cell(idx + adj, idx)
 
     def inc_cell(self, idx, mine):
-        print(idx, self.get_col(idx))
-
         if idx >= 0 and idx < self.width * self.height and self.cells[idx] != -1 \
-            and abs(self.get_col(idx) - self.get_col(mine)) != (self.width - 1):
+        and abs(self.get_col(idx) - self.get_col(mine)) != (self.width - 1):
+            print(idx, self.get_col(idx))
             self.cells[idx] += 1
+
+    def get_col(self, idx):
+        return (idx+1) % self.width or self.width
     
     def display(self, Type = "csv"):
         if(Type.lower() == "csv"):
@@ -50,5 +52,5 @@ class board:
     def get_col(self, idx):
         return (idx+1) % self.width or self.width
     
-b2 = board(5,5,1)
+b2 = board(3,2,1)
 b2.display()
