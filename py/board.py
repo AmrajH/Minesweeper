@@ -29,7 +29,7 @@ class board:
     def init_mine(self, idx):
         self.cells[idx] = -1
 
-        change = [self.width + 1, self.width, self.width - 1, +1, -1, -self.width + 1, -self.width, -self.width - 1]
+        change = [self.width+1, self.width, self.width-1, +1, -1, -self.width+1, -self.width, -self.width-1]
         for adj in change:
             self.inc_cell(idx + adj, idx)
 
@@ -41,6 +41,7 @@ class board:
 
     def get_col(self, idx):
         return (idx+1) % self.width or self.width
+
     
     def display(self, Type = "csv"):
         if(Type.lower() == "csv"):
@@ -49,8 +50,6 @@ class board:
                     print()
                 print(self.cells[i], end=" ")
 
-    def get_col(self, idx):
-        return (idx+1) % self.width or self.width
     
-b2 = board(3,2,1)
+b2 = board(5,5,1)
 b2.display()
