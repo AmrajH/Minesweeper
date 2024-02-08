@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Revealer</title>
+    <style>
+       body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #grid-container {
+            padding: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid #000;
+            width: 50px; /* Set a fixed width for each cell */
+            height: 50px; /* Set a fixed height for each cell */
+            text-align: center;
+            cursor: pointer;
+        }
+        td:hover{
+            color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        var width;
+        var height;
+            // Function to create the grid dynamically
+        function createGrid(rows, cols) {
+            const gridContainer = document.createElement('div');
+            gridContainer.setAttribute("id", 'grid-container');
+
+            const table = document.createElement('table');
+            table.setAttribute('border', '1');
+
+            for (let i = 0; i < rows; i++) {
+                const row = table.insertRow();
+
+                for (let j = 0; j < cols; j++) {
+                    const cell = row.insertCell();
+                    cell.onclick = function () {
+                        revealCell(i, j);
+                    };
+                    cell.innerText = " "; // Display initial board values
+                }
+            }
+
+            gridContainer.appendChild(table);
+
+            // Append the gridContainer to the body
+            document.body.appendChild(gridContainer);
+        }
+
+        // Function to reveal the cell
+        function revealCell(row, col) {
+            fetch(`/reveal/${row}/${col}`)
+                .then(response => response.json())
+                .then(data => {
+                    const cell = document.querySelectorAll('td')[row * width + col];
+                    if (cell.innerText === ""){ // has not been revealed yet
+                        cell.innerText = data.value;
+                        if (data.value === 0) {
+                            for (let i = row - 1; i <= row + 1; i++) {
+                                for (let j = col - 1; j <= col + 1; j++) {
+                                    if (i >= 0 && i < height && j >= 0 && j < width && document.querySelectorAll('td')[i * width + j].innerText === "") {
+                                        revealCell(i, j);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+        }
+
+        // Function to generate board
+        function init_board() {
+            width = parseInt(prompt('Enter the width of the grid:'));
+            height = parseInt(prompt('Enter the height of the grid:'));
+            const numMines = parseInt(prompt('Enter the number of mines:'));
+
+            fetch(`/init_board/${height}/${width}/${numMines}`)
+            .then(response => response.json())
+            .then(data => {
+                createGrid(height, width)
+            })
+        };
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            init_board();
+        });
+    </script>
+</body>
+</html>
