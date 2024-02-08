@@ -4,10 +4,8 @@ import os
 
 app = Flask(__name__)
 
-# Get the current directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Set the template directory to the 'html' directory in the parent directory
 app.template_folder = os.path.join(current_dir, '../html')
 
 class Game:
@@ -28,7 +26,6 @@ class Game:
     
 game = Game()
 
-# Set the template directory to the 'html' directory in the parent directory
 app.template_folder = os.path.join(current_dir, '../html')
 
 @app.route('/')

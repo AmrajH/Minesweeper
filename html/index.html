@@ -23,8 +23,8 @@
 
         td {
             border: 1px solid #000;
-            width: 50px; /* Set a fixed width for each cell */
-            height: 50px; /* Set a fixed height for each cell */
+            width: 50px;
+            height: 50px; 
             text-align: center;
             cursor: pointer;
         }
@@ -37,7 +37,7 @@
     <script>
         var width;
         var height;
-            // Function to create the grid dynamically
+
         function createGrid(rows, cols) {
             const gridContainer = document.createElement('div');
             gridContainer.setAttribute("id", 'grid-container');
@@ -53,17 +53,14 @@
                     cell.onclick = function () {
                         revealCell(i, j);
                     };
-                    cell.innerText = " "; // Display initial board values
+                    cell.innerText = " ";
                 }
             }
 
             gridContainer.appendChild(table);
-
-            // Append the gridContainer to the body
             document.body.appendChild(gridContainer);
         }
 
-        // Function to reveal the cell
         function revealCell(row, col) {
             fetch(`/reveal/${row}/${col}`)
                 .then(response => response.json())
@@ -84,7 +81,6 @@
                 });
         }
 
-        // Function to generate board
         function init_board() {
             width = parseInt(prompt('Enter the width of the grid:'));
             height = parseInt(prompt('Enter the height of the grid:'));
